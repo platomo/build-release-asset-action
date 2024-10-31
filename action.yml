@@ -1,0 +1,49 @@
+name: Test Python
+
+description: "Builds release assets"
+
+inputs:
+  platomo-token:
+    description: "Access Token for Platomo Builder"
+    required: true
+  package-version:
+    description: "Package Version"
+    required: true
+  save-artifacts:
+    description: "Already saved artifacts"
+    required: true
+
+
+runs:
+  using: "composite"
+  steps:
+    - name: Check-out platomo-build repository
+      uses: actions/checkout@v4
+      with:
+        repository: platomo/platomo-build
+        token: ${{ inputs.platomo-token }}
+        path: platomo-build
+
+    - name: Install builder dependencies
+      shell: bash
+      run: |
+        cd platomo-build
+        python -m pip install --upgrade pip
+        if [ -f "requirements.txt" ]; then
+         pip install -r requirements.txt
+        fi
+        if [ -f "requirements-dev.txt" ]; then
+         pip install -r requirements-dev.txt
+        fi
+
+    - name: Build release assets
+      shell: bash
+      run: python ./platomo-build/build.py --package_version ${{ inputs.package-version }}
+
+    - name: Archive build results
+      if: inputs.save-artifacts
+      uses: actions/upload-artifact@v4
+      with:
+          name: build-results
+          path: dist
+          compression-level: 0
