@@ -1,4 +1,4 @@
-name: Test Python
+name: Build Release Assets
 
 description: "Builds release assets"
 
@@ -11,7 +11,7 @@ inputs:
     required: true
   save-artifacts:
     description: "Already saved artifacts"
-    required: true
+    required: false
 
 
 runs:
