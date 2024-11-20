@@ -38,7 +38,7 @@ runs:
 
     - name: Build release assets
       shell: bash
-      run: python ./platomo-build/build.py --package_version ${{ inputs.package-version }}
+      run: python ./platomo-build/build.py
 
     - name: Archive build results
       if: inputs.save-artifacts
