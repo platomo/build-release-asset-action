@@ -1,4 +1,3 @@
-
 # Build Release Assets
 
 This GitHub Action builds release assets by checking out the Platomo build repository, installing dependencies, and executing the release build. Optionally, it can save the build artifacts for later use.
@@ -21,7 +20,7 @@ name: Build Release Assets
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - "v*.*.*"
 
 jobs:
   build-release:
@@ -32,7 +31,7 @@ jobs:
         uses: ./.github/actions/build-release-assets
         with:
           platomo-token: ${{ secrets.PLATOMO_TOKEN }}
-          package-version: '1.2.3'
+          package-version: "1.2.3"
           save-artifacts: true
 ```
 
